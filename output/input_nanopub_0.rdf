@@ -1,0 +1,41 @@
+
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix this: <https://example.com/> .
+@prefix sio: <http://semanticscience.org/resource/> .
+@prefix ncbi-asb: <https://www.ncbi.nlm.nih.gov/assembly/> .
+@prefix biol: <https://ontologi.es/biol/ns.html> .
+
+
+sub:Head {
+  this: np:hasAssertion sub:assertion ;
+    np:hasProvenance sub:provenance ;
+    np:hasPublicationInfo sub:pubinfo ;
+    a np:Nanopublication .
+}
+
+
+sub:assertion {
+  ncbi-asb: a sio:SIO_000984 ;
+        sio:SIO_000628 [ a sio:SIO_010000 ;       
+                         biol:hasTaxonomy <taxonomy_placeholder> ;
+                         dc:label  "Trypanosoma cruzi (kinetoplastids)" . ] .
+}
+
+
+sub:provenance {
+  sub:assertion prov:hadPrimarySource <https://www.ncbi.nlm.nih.gov/biosample/SAMN08458079/> ;
+    prov:wasAttributedTo "Institut Pasteur de Montevideo" ;  
+    prov:collectedDate "1982"^^xsd:dateTime ;
+    sio:SIO_000772 <https://doi.org/10.1099/mgen.0.000177> ;
+    dc:created "2018/05/30"^^xsd:dateTime .
+}
+
+
+sub:pubinfo {
+  this: dc:created "2020-10-26 23:47:36.832531"^^xsd:dateTime ;
+    pav:createdBy <123> .
+}
