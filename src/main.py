@@ -29,7 +29,7 @@ def convert_dict_to_rdf(dict_input):
         assembly_id = link["report"]["bioSample"]["url"].split("/")[-1]
         np_assertions = np_cnt.assertion.format(
             assembly_id=assembly_id,        
-            taxonomy_link="taxonomy_placeholder",
+            taxonomy_link=link["report"]["taxonomyUrl"],
             organism_name=link["report"]["organismName"],
         )    
         np_prov = np_cnt.provenance.format(
