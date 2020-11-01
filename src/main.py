@@ -53,22 +53,21 @@ def convert_dict_to_rdf(dict_input):
     
 def convert_rdf_to_file(nanopubs, filepath):
     writemode = "w"
-    output_folder = "../output"
+    output_folder = "./output"
 
     for i in range(len(nanopubs)):
-        filename = filepath.split("/")[-1]
+        filename = filepath.replace("\\", "/").split("/")[-1]
         filename_without_extension = filename.split(".")[0]
         output_path = f"{output_folder}/{filename_without_extension}_{i}.rdf"
         with open(output_path, writemode) as f:
             f.write(nanopubs[i])
             f.close()
 
-input_folder = "../input"
+input_folder = "./input"
 
 files_to_convert = list_json_files_on_folder(input_folder)
 
 for filepath in files_to_convert:
-    
     print(f"Reading {filepath}")
     file_as_dict = extract_dict_from_file(filepath) 
     
@@ -79,6 +78,5 @@ for filepath in files_to_convert:
         print("Assembly links not found.")
         continue
     nanopubs = convert_dict_to_rdf(file_as_dict)
-    # print(nanopubs)
     convert_rdf_to_file(nanopubs, filepath)
     print(f"Finished converting {filepath}")
