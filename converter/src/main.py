@@ -35,7 +35,7 @@ def convert_dict_to_rdf(dict_input):
         np_prov = np_cnt.provenance.format(
             biosample_link=link["report"]["bioSample"]["url"],      
             institution=link["report"]["submitter"],        
-            collected_at=link["report"]["bioSample"]["collectionDate"],
+            collected_at=link.get("report").get("bioSample").get("collectionDate") or "undefined",
             publication_link=dict_input["doi"],       
             submitted_at=link["report"]["date"],
         )    
