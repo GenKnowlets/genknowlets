@@ -1,8 +1,0 @@
-**/input/*
-**/output/*
-**/src/__pycache__/*
-*.gbff
-*.gz
-*.json
-*.exe
-.idea/
