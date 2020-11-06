@@ -2,6 +2,8 @@ import json
 import os
 import nanopub_constants as np_cnt
 import datetime
+import csv
+import boto3
 
 def list_json_files_on_folder(folder_path):
     filepaths = []
@@ -9,6 +11,13 @@ def list_json_files_on_folder(folder_path):
         if filename.endswith(".json"): 
             filepath = os.path.join(folder_path, filename)
             filepaths.append(filepath)
+    return filepaths
+
+def list_files_on_folder(folder_path):
+    filepaths = []
+    for filename in os.listdir(folder_path):
+        filepath = os.path.join(folder_path, filename)
+        filepaths.append(filepath)
     return filepaths
 
 def extract_dict_from_file(filepath):
@@ -62,20 +71,59 @@ def convert_rdf_to_file(nanopubs, filepath):
         with open(output_path, writemode) as f:
             f.write(nanopubs[i])
             f.close()
+            
+def convert_files(file_list):
+    for filepath in file_list:
+        print(f"Reading {filepath}")
+        file_as_dict = extract_dict_from_file(filepath) 
+        
+        try:
+            quant_samples = len(file_as_dict["assembly"]["links"])
+            print(f"Found {quant_samples} samples.")
+        except:
+            print("Assembly links not found.")
+            continue
+        nanopubs = convert_dict_to_rdf(file_as_dict)
+        convert_rdf_to_file(nanopubs, filepath)
+        print(f"Finished converting {filepath}") 
+        
+
+def upload_file(file_name, bucket, aws_client, object_name=None):
+    # If S3 object_name was not specified, use file_name
+    if object_name is None:
+        object_name = file_name
+
+    # Upload the file
+    s3_client = boto3.client('s3')
+    try:
+        response = s3_client.upload_file(file_name, bucket, object_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
+        
+def upload_files_to_s3(aws_config_path):
+    with open("../aws_config.json", "r") as f:
+        aws_config = json.loads(f.read())
+    aws_client = boto3.client(
+        's3',
+        aws_access_key_id=aws_config["access_key_id"],
+        aws_secret_access_key=aws_config["secret_access_key"]
+    )
+    file_list = list_files_on_folder("../output")
+    for filepath in file_list:
+        upload_file(filepath, aws_config["bucket_arn"], aws_client)        
 
 input_folder = "../input"
 files_to_convert = list_json_files_on_folder(input_folder)
 
-for filepath in files_to_convert:
-    print(f"Reading {filepath}")
-    file_as_dict = extract_dict_from_file(filepath) 
-    
-    try:
-        quant_samples = len(file_as_dict["assembly"]["links"])
-        print(f"Found {quant_samples} samples.")
-    except:
-        print("Assembly links not found.")
-        continue
-    nanopubs = convert_dict_to_rdf(file_as_dict)
-    convert_rdf_to_file(nanopubs, filepath)
-    print(f"Finished converting {filepath}")
+convert_files(files_to_convert)
+
+aws_config_path = "../aws_config.json"
+
+if os.path.exists(aws_config_path):
+    upload_files_to_s3(aws_config_path)
+
+
+
+

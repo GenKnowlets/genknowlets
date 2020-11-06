@@ -237,6 +237,8 @@ func crawlPubmed(c *colly.Collector, data *model.Data, url string, fromPubmed bo
 	})
 
 	// Get DOI
+
+	
 	c.OnHTML(".doi .id-link", func(e *colly.HTMLElement) {
 		data.DOI = e.Attr("href")
 	})

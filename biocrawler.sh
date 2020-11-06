@@ -4,7 +4,7 @@ CONVERTER="converter"
 echo "- Starting Crawler.."
 cd $CRAWLER
 go build
-./biocrawler
+./biocrawler -r
 echo "- Crawling finished."
 cd ../
 echo "- Copying contents of $CRAWLER/output/ to $CONVERTER/input/"
