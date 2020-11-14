@@ -2,7 +2,7 @@
 
 Este código extrai montagens(assemblys) de genomas referenciados em uma publicação do PubMed. 
 
-Para rodar, apenas execute o `./biocrawler.sh` em um terminar Linux.
+Para rodar, apenas execute `./biocrawler.sh` na pasta do repositório em um terminal Linux.
 
 # Crawler de Pubmed e GenBank
 
