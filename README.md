@@ -1,3 +1,9 @@
+# Genknowlets: Crawler e Conversor
+
+Este código extrai montagens(assemblys) de genomas referenciados em uma publicação do PubMed. 
+
+Para rodar, apenas execute o `./biocrawler.sh` em um terminar Linux.
+
 # Crawler de Pubmed e GenBank
 
 Esse crawler usa a biblioteca Colly para navegar pelas páginas do Pubmed e GenBank para capturar dados.
