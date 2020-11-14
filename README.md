@@ -1,8 +1,8 @@
 # Genknowlets: Crawler e Conversor
 
-Este código extrai montagens(assemblys) de genomas referenciados em uma publicação do PubMed. 
+Este código extrai montagens(assemblys) de genomas referenciados em uma publicação do PubMed e converte em nanopublicações. 
 
-Para rodar, apenas execute `./biocrawler.sh` na pasta do repositório em um terminal Linux.
+Para rodar, apenas execute `./biocrawler.sh` na pasta do repositório em um terminal Linux. As nanopublicações são depositadas na pasta converter/output.
 
 # Crawler de Pubmed e GenBank
 
