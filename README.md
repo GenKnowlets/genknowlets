@@ -4,6 +4,8 @@ Este código extrai montagens(assemblys) de genomas referenciados em uma publica
 
 Para rodar, apenas execute `./biocrawler.sh` na pasta do repositório em um terminal Linux. As nanopublicações são depositadas na pasta converter/output.
 
+A criação desse projeto foi parte da discplina de Bioinformática do Departamento de Ciência da Computação  UFRJ, ministrada pela professora Maria Luiza em conjunto com professores e alunos de mestrado da Fiocruz.
+
 # Crawler de Pubmed e GenBank
 
 Esse crawler usa a biblioteca Colly para navegar pelas páginas do Pubmed e GenBank para capturar dados.
